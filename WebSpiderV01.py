@@ -39,24 +39,25 @@ class Spider:
         self.datas = []
         self.myTool = HTML_Tool()
         #s = time.strftime("%Y-%m-%d(%H_%M_%S)")
-        self.file_name = 'huikan.xls'
+        self.file_name = 'XDZG.xls'
         print u'会刊网爬虫程序已启动，正在开始加载...'
 
     def Solve(self):
         self.get_data()
-        print u'爬虫报告：会刊目录已保存至当前文件夹下"huikan.xls"文件'
+        print u'爬虫报告：会刊目录已保存至当前文件夹下"XDZG.xls"文件'
         print u'加载完成，按Enter键退出爬虫程序'
         raw_input()
 
     def wExcel(self):
+        #print self.datas
         r_xls = ExcelRead.open_workbook(self.file_name)
         r_sheet = r_xls.sheet_by_index(0)
         rows = r_sheet.nrows
         w_xls = copy(r_xls)
         sheet_write = w_xls.get_sheet(0)
-        #for i in range(len(self.datas)):
-        for j in range(len(self.datas[0])):
-            sheet_write.write(rows, j, self.datas[0][j].decode('utf8'))
+        for i in range(len(self.datas)):
+            for j in range(len(self.datas[i])):
+                sheet_write.write(rows + i, j, self.datas[i][j].decode('utf8'))
         w_xls.save(self.file_name)
 
     def get_data(self):
@@ -68,7 +69,7 @@ class Spider:
             response = self.s.get(afterURL1+self.num_start+afterURL2+self.num_end+afterURL3+str(i),headers = headers)
             mypage = response.content
             self.deal_data(mypage.decode('utf-8'))
-            self.wExcel()
+            #self.wExcel()
             #print mypage
 
     def deal_data(self,mypage):
@@ -92,7 +93,8 @@ class Spider:
             #print mid
             self.datas = []
             self.datas.append(mid)
-        #print self.datas
+            self.wExcel()
+            #print self.datas
 
 
 # def get_data():
