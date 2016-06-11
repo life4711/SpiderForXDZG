@@ -71,9 +71,11 @@ class Spider:
             self.deal_data(mypage.decode('utf-8'))
             #self.wExcel()
             #print mypage
+            #raw_input()
+
 
     def deal_data(self,mypage):
-        myItems = re.findall('<div class="list-item".*?#.*?</span>(.*?)</div>.*?<div>(.*?)</div>.*?<div>(.*?)</div>.*?<div>(.*?)<span.*?class="info-div-div">(.*?)<span class="orderlist".*?class="info-div-div">(.*?)</div>.*?<div  class="info-div-div">(.*?)</div>.*?<div class="userAddr info-div-div common-list-item">(.*?)<span class="mapToken',mypage,re.S)
+        myItems = re.findall('<div class="list-item".*?#.*?</span>(.*?)</div>.*?<div>(.*?)</div>.*?<div>(.*?)</div>.*?<div>(.*?)<span.*?class="info-div-div">(.*?)<span class="orderlist".*?class="info-div-div">(.*?)</div>.*?<div  class="info-div-div">(.*?)</div>.*?<div class="userAddr info-div-div common-list-item">(.*?)<span class="mapToken.*?class="info-div-margin">(.*?)</div>.*?<span class="menutotal">(.*?)</span>',mypage,re.S)
         #print myItems
         for item in myItems:
             items = []
@@ -86,6 +88,8 @@ class Spider:
             items.append(item[5].replace("\n", ""))
             items.append(item[6].replace("\n", ""))
             items.append(item[7].replace("\n", ""))
+            items.append(item[8].replace("\n", ""))
+            items.append(item[9].replace("\n", ""))
             #print items
             mid = []
             for i in items:
